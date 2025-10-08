@@ -1,23 +1,20 @@
 package com.project.chatop.controller;
 
-import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nimbusds.oauth2.sdk.Request;
 import com.project.chatop.dto.LoginRequest;
 import com.project.chatop.dto.RegisterRequest;
 import com.project.chatop.model.User;
-import com.project.chatop.repository.UserRepository;
 import com.project.chatop.service.AuthService;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {	
 	private final AuthService authService;
 	
@@ -34,6 +31,4 @@ public class AuthController {
 	public User login(@RequestBody LoginRequest request) {
 		return authService.login(request.getEmail(), request.getPassword());
 	}
-	
-	
 }

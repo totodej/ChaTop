@@ -3,8 +3,6 @@ package com.project.chatop.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
