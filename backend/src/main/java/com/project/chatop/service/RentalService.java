@@ -1,4 +1,4 @@
-package com.project.chatop.repository;
+package com.project.chatop.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import com.project.chatop.model.Rental;
+import com.project.chatop.repository.RentalRepository;
 
 @Service
 public class RentalService {

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.chatop.model.Rental;
-import com.project.chatop.repository.RentalService;
+import com.project.chatop.service.RentalService;
 
 @RestController
 @RequestMapping("/api/rentals")
