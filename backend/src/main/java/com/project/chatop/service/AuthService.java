@@ -8,16 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.project.chatop.model.User;
 import com.project.chatop.repository.UserRepository;
+import com.project.chatop.security.JwtUtil;
 
 @Service
 public class AuthService {
 	
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final JwtUtil jwtUtil;
 	
-	public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.jwtUtil = jwtUtil;
 	}
 	
 	public User register (String name, String email, String password) {
@@ -35,7 +38,7 @@ public class AuthService {
 		return userRepository.save(user);
 	}
 	
-	public User login(String email, String password) {
+	public String login(String email, String password) {
 		Optional<User> optionalUser = userRepository.findByEmail(email);
 		
 		if(optionalUser.isEmpty()) {
@@ -48,7 +51,7 @@ public class AuthService {
 			throw new RuntimeException("Mot de passe incorect");
 		}
 		
-		return user;
+		return jwtUtil.generateToken(user);	
 	}
 	
 }

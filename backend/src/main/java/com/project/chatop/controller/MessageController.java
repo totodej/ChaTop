@@ -1,5 +1,7 @@
 package com.project.chatop.controller;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +23,10 @@ public class MessageController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Message> createMessage(@RequestBody Message message) {
+	public ResponseEntity<Map<String, String>> createMessage(@RequestBody Message message) {
 		System.out.println("Message reçu : " + message.getUserId() + ", " + message.getRentalId());
-		Message newMessage = messageService.createMessage(message);
-		return ResponseEntity.ok(newMessage);
+		messageService.createMessage(message);
+		return ResponseEntity.ok(Map.of("message", "Message send with success"));
 	}
 
 }

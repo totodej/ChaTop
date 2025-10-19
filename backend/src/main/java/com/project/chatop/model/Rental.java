@@ -2,6 +2,8 @@ package com.project.chatop.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class Rental {
 	@Column
 	private float price;
 	
+	@Lob
 	@Column
 	private String picture;
 	
@@ -36,10 +39,10 @@ public class Rental {
 	@Column
 	private Integer ownerId;
 	
-	@Column
+	@Column(name="created_at")
 	private LocalDateTime createdAt;
 	
-	@Column
+	@Column(name="updated_at")
 	private LocalDateTime updatedAt;
 	
 	public Rental() {
