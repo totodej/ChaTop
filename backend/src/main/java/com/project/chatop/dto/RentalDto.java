@@ -15,6 +15,7 @@ public class RentalDto {
     
     private String description;
     
+    @JsonProperty("owner_id")
     private Integer ownerId;
     
     @JsonProperty("created_at")

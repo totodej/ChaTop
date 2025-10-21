@@ -34,7 +34,7 @@ public class Rental {
 	@Lob
 	private String description;
 	
-	@Column
+	@Column(name="owner_id")
 	private Integer ownerId;
 	
 	@Column(name="created_at")

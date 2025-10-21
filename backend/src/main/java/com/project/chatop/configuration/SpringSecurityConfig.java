@@ -1,10 +1,7 @@
 package com.project.chatop.configuration;
 
-
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -33,13 +30,13 @@ public class SpringSecurityConfig {
 		.httpBasic(basic -> basic.disable())
         .authorizeHttpRequests(auth -> auth
         		.requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
-        		.requestMatchers("/images/**").permitAll() 
+        		.requestMatchers("/images/**").permitAll()
         		.anyRequest().authenticated())
         
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 	    http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-	
+	    	
 	    return http.build();
 	}
 	
@@ -47,5 +44,4 @@ public class SpringSecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
 }

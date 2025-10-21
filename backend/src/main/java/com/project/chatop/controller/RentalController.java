@@ -77,6 +77,7 @@ public class RentalController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Map<String, String>> updateRental(@PathVariable Integer id, @RequestBody Rental rental) {
 		rentalService.updateRental(id, rental);
+		
 		return ResponseEntity.ok(Map.of("message", "Rental updated !"));
 	}
 }

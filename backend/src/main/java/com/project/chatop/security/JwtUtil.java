@@ -3,6 +3,7 @@ package com.project.chatop.security;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.project.chatop.model.User;
@@ -13,10 +14,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtUtil {
-	
-	private final String SECRET_KEY = "MaCleSuperLongueEtComplexePourJWTs2025tChatopu123456";
-
-    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10h
+    
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
+    
+    @Value("${jwt.expiration}")
+    private long EXPIRATION_TIME;
 	
 	public String generateToken(User user) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");

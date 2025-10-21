@@ -98,15 +98,14 @@ public class RentalService {
 	
 	public RentalDto updateRental(Integer id, Rental rental) {
 		LocalDateTime currentDate = LocalDateTime.now();
+		
 		Rental existingRental = rentalRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Rental not found"));
 
 		existingRental.setName(rental.getName());
 		existingRental.setSurface(rental.getSurface());
 		existingRental.setPrice(rental.getPrice());
-		existingRental.setPicture(rental.getPicture());
 		existingRental.setDescription(rental.getDescription());
-		existingRental.setOwnerId(rental.getOwnerId()); 
 		existingRental.setUpdatedAt(currentDate);
 		
 		Rental updatedRental = rentalRepository.save(existingRental);
