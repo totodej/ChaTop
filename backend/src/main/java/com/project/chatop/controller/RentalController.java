@@ -1,12 +1,7 @@
 package com.project.chatop.controller;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.chatop.dto.RentalDto;
 import com.project.chatop.model.Rental;
 import com.project.chatop.service.RentalService;
 
@@ -37,38 +33,23 @@ public class RentalController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<Map<String, List<Rental>>> getAllRentals() {
-		List<Rental> rentals = rentalService.getAllRentals();
+	public ResponseEntity<Map<String, List<RentalDto>>> getAllRentals() {
+		List<RentalDto> rentals = rentalService.getAllRentals();
+
 		return ResponseEntity.ok(Map.of("rentals", rentals));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<RentalResponseDto> getRentalById(@PathVariable Integer id) {
-		Optional<Rental> rentalOptional = rentalService.getRentalById(id);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	public ResponseEntity<RentalDto> getRentalById(@PathVariable Integer id) {
+		Optional<RentalDto> rentalOptional = rentalService.getRentalById(id);
 		
 	    if (rentalOptional.isEmpty()) {
 	        return ResponseEntity.notFound().build();
 	    }
 		
-		Rental rental = rentalOptional.get();
+		RentalDto rental = rentalOptional.get();
 		
-		String createdAtFormatted = rental.getCreatedAt() != null ? rental.getCreatedAt().format(formatter) : null;
-	    String updatedAtFormatted = rental.getUpdatedAt() != null ? rental.getUpdatedAt().format(formatter) : null;
-	    
-	    RentalResponseDto responseDto = new RentalResponseDto(
-	            rental.getId(),
-	            rental.getName(),
-	            rental.getSurface(),
-	            rental.getPrice(),
-	            rental.getPicture(),
-	            rental.getDescription(),
-	            rental.getOwnerId(),
-	            createdAtFormatted,
-	            updatedAtFormatted
-	        );
-	    
-	    return ResponseEntity.ok(responseDto);
+	    return ResponseEntity.ok(rental);
 	}
 	
 	@PostMapping

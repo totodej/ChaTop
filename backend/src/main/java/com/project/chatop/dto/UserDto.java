@@ -1,23 +1,22 @@
 package com.project.chatop.dto;
 
-import java.time.LocalDateTime;
 
-public class UserProfileResponseDto {
+public class UserDto {
 	private Integer id;
 	private String name;
     private String email;
     private String created_at;
     private String updated_at;
 
-    public UserProfileResponseDto(Integer id, String name, String email, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public UserDto(Integer id, String name, String email, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.created_at = createdAt != null ? createdAt.toString() : null;
-        this.updated_at = updatedAt != null ? updatedAt.toString() : null;
+        this.created_at = createdAt;
+        this.updated_at = updatedAt;
     }
 
-    public Integer getId() {
+	public Integer getId() {
         return id;
     }
     

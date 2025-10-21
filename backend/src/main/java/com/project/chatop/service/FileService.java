@@ -28,7 +28,6 @@ public class FileService {
          Path filePath = uploadPath.resolve(fileName);
          Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-         // Retourne l’URL complète pour que le front puisse charger l’image
          return SERVER_URL + "/images/" + fileName;
     }
 }

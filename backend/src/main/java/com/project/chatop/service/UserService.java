@@ -1,0 +1,37 @@
+package com.project.chatop.service;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.project.chatop.dto.UserDto;
+import com.project.chatop.model.User;
+import com.project.chatop.repository.UserRepository;
+
+@Service
+public class UserService {
+	private final UserRepository userRepository;
+	
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
+	public UserDto getUserById(Integer id) {
+        
+        Optional<User> userOptional = userRepository.findById(id);
+        
+        User user = userOptional.get();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String createdAtStr = user.getCreatedAt() != null ? user.getCreatedAt().format(formatter) : null;
+        String updatedAtStr = user.getUpdatedAt() != null ? user.getUpdatedAt().format(formatter) : null;
+        UserDto userDto = new UserDto(
+        		user.getId(),
+        		user.getName(), 
+        		user.getEmail(), 
+        		createdAtStr, 
+        		updatedAtStr);
+        
+        return userDto;
+	}
+}

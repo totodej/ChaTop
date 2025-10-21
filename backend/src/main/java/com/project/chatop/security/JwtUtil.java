@@ -1,5 +1,6 @@
 package com.project.chatop.security;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.springframework.stereotype.Component;
@@ -18,12 +19,13 @@ public class JwtUtil {
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10h
 	
 	public String generateToken(User user) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         return Jwts.builder()
                 .claim("userId", user.getId())
                 .claim("name", user.getName())
                 .claim("email", user.getEmail())
-                .claim("createdAt", user.getCreatedAt() != null ? user.getCreatedAt().toString() : null)
-                .claim("updatedAt", user.getUpdatedAt() != null ? user.getUpdatedAt().toString() : null)
+                .claim("createdAt", user.getCreatedAt() != null ? user.getCreatedAt().format(formatter) : null)
+                .claim("updatedAt", user.getUpdatedAt() != null ? user.getUpdatedAt().format(formatter) : null)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -46,6 +48,4 @@ public class JwtUtil {
         }
     }
 	
-	
-
 }

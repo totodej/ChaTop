@@ -1,21 +1,29 @@
-package com.project.chatop.controller;
+package com.project.chatop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RentalResponseDto {
+public class RentalDto {
     private Integer id;
+    
     private String name;
+    
     private Integer surface;
+    
     private float price;
+    
     private String picture;
+    
     private String description;
+    
     private Integer ownerId;
+    
     @JsonProperty("created_at")
     private String createdAt;
+    
     @JsonProperty("updated_at")
     private String updatedAt;
 
-    public RentalResponseDto(Integer id, String name, Integer surface, float price, String picture, String description, Integer ownerId, String createdAt, String updatedAt) {
+    public RentalDto(Integer id, String name, Integer surface, float price, String picture, String description, Integer ownerId, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
         this.surface = surface;
@@ -62,7 +70,5 @@ public class RentalResponseDto {
 	public String getUpdatedAt() {
 		return updatedAt;
 	}
-    
-    
 
 }

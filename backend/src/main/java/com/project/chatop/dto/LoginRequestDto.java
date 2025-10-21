@@ -1,16 +1,8 @@
 package com.project.chatop.dto;
 
-public class RegisterRequest {
-	private String name;
+public class LoginRequestDto {
 	private String email;
 	private String password;
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	
 	public String getEmail() {
 		return email;
@@ -27,4 +19,5 @@ public class RegisterRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 }
