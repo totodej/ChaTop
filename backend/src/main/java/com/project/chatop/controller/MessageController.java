@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.chatop.model.Message;
+import com.project.chatop.dto.MessageDto;
 import com.project.chatop.service.MessageService;
 
 @RestController
@@ -22,10 +22,9 @@ public class MessageController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Map<String, String>> createMessage(@RequestBody Message message) {
-		System.out.println("Message reçu : " + message.getUserId() + ", " + message.getRentalId());
-		messageService.createMessage(message);
+	public ResponseEntity<Map<String, String>> createMessage(@RequestBody MessageDto messageDto) {
+		System.out.println("Message reçu : " + messageDto.getUserId() + ", " + messageDto.getRentalId());
+		messageService.createMessage(messageDto);
 		return ResponseEntity.ok(Map.of("message", "Message send with success"));
 	}
-
 }
