@@ -122,5 +122,4 @@ public class RentalService {
 				updatedRental.getCreatedAt() != null ? updatedRental.getCreatedAt().format(formatter) : null,
 				updatedRental.getUpdatedAt() != null ? updatedRental.getUpdatedAt().format(formatter) : null);
 	}
-	
 } 

@@ -1,7 +1,5 @@
 package com.project.chatop.controller;
 
-import java.util.Optional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.chatop.dto.UserDto;
-import com.project.chatop.model.User;
 import com.project.chatop.service.UserService;
 
 @RestController
@@ -28,5 +25,4 @@ public class UserController {
 
 		return ResponseEntity.ok(user);
 	}
-
 }

@@ -71,5 +71,4 @@ public class RentalDto {
 	public String getUpdatedAt() {
 		return updatedAt;
 	}
-
 }
