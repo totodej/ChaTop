@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.chatop.dto.MessageDto;
 import com.project.chatop.service.MessageService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController
 @RequestMapping("/api/messages")
+@SecurityRequirement(name = "bearerAuth")
 public class MessageController {
 	
 	final MessageService messageService;

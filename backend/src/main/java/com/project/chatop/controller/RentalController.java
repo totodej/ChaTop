@@ -22,9 +22,11 @@ import com.project.chatop.model.Rental;
 import com.project.chatop.service.RentalService;
 
 import io.jsonwebtoken.Claims;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/api/rentals")
+@SecurityRequirement(name = "bearerAuth")
 public class RentalController {
 	private RentalService rentalService;
 	

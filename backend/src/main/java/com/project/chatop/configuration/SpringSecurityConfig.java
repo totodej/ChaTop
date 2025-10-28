@@ -13,8 +13,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.project.chatop.security.JwtRequestFilter;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+
 @Configuration
 @EnableWebSecurity
+@SecurityScheme(
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT"
+)
 public class SpringSecurityConfig {
 	
 	private final JwtRequestFilter jwtRequestFilter;
