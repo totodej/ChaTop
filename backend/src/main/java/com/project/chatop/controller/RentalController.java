@@ -43,13 +43,7 @@ public class RentalController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<RentalDto> getRentalById(@PathVariable Integer id) {
-		Optional<RentalDto> rentalOptional = rentalService.getRentalById(id);
-		
-	    if (rentalOptional.isEmpty()) {
-	        return ResponseEntity.notFound().build();
-	    }
-		
-		RentalDto rental = rentalOptional.get();
+		RentalDto rental = rentalService.getRentalById(id);
 		
 	    return ResponseEntity.ok(rental);
 	}

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.chatop.dto.RentalDto;
+import com.project.chatop.exception.ForbiddenException;
+import com.project.chatop.exception.ResourceNotFoundException;
 import com.project.chatop.model.Rental;
 import com.project.chatop.repository.RentalRepository;
 
@@ -45,14 +47,10 @@ public class RentalService {
 				.toList();
 	}
 	
-	public Optional<RentalDto> getRentalById(Integer id) {
-		Optional<Rental> rentalOptional = rentalRepository.findById(id);
-		
-		if (rentalOptional.isEmpty()) {
-	        return Optional.empty();
-	    }
-		
-		Rental rental = rentalOptional.get();
+	public RentalDto getRentalById(Integer id) {
+		Rental rental = rentalRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Rental not found"));
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		
 		RentalDto rentalDto = new RentalDto(
@@ -66,16 +64,16 @@ public class RentalService {
 				rental.getCreatedAt() != null ? rental.getCreatedAt().format(formatter) : null,
 				rental.getUpdatedAt() != null ? rental.getUpdatedAt().format(formatter): null);
 		
-		return Optional.of(rentalDto);
+		return rentalDto;
 	}
 	
 	public Rental createRental(MultipartFile picture, Rental rental) {
 		LocalDateTime currentDate = LocalDateTime.now();
 		
 		Claims claims = (Claims) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Integer ownerId = claims.get("userId", Integer.class);
+        Integer currentUserId = claims.get("userId", Integer.class);
         
-        rental.setOwnerId(ownerId);
+        rental.setOwnerId(currentUserId);
         rental.setCreatedAt(currentDate);
 		rental.setUpdatedAt(currentDate);
 		
@@ -100,7 +98,14 @@ public class RentalService {
 		LocalDateTime currentDate = LocalDateTime.now();
 		
 		Rental existingRental = rentalRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Rental not found"));
+				.orElseThrow(() -> new ResourceNotFoundException("Rental not found"));
+		
+		Claims claims = (Claims) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Integer currentUserId = claims.get("userId", Integer.class);
+		
+		if (!existingRental.getOwnerId().equals(currentUserId)) {
+		    throw new ForbiddenException("You can only modify your own rentals.");
+		}
 
 		existingRental.setName(rental.getName());
 		existingRental.setSurface(rental.getSurface());
@@ -111,7 +116,7 @@ public class RentalService {
 		Rental updatedRental = rentalRepository.save(existingRental);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		
-		return new RentalDto(
+		RentalDto rentalDto = new RentalDto(
 				updatedRental.getId(),
 				updatedRental.getName(),
 				updatedRental.getSurface(),
@@ -121,5 +126,7 @@ public class RentalService {
 				updatedRental.getOwnerId(),
 				updatedRental.getCreatedAt() != null ? updatedRental.getCreatedAt().format(formatter) : null,
 				updatedRental.getUpdatedAt() != null ? updatedRental.getUpdatedAt().format(formatter) : null);
+		
+		return rentalDto;
 	}
 } 

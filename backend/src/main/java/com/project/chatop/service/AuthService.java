@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.project.chatop.exception.ResourceNotFoundException;
 import com.project.chatop.model.User;
 import com.project.chatop.repository.UserRepository;
 import com.project.chatop.security.JwtUtil;
@@ -25,7 +26,7 @@ public class AuthService {
 	
 	public User register (String name, String email, String password) {
 		if(userRepository.existsByEmail(email)) {
-			throw new RuntimeException("Email déjà utilisé");
+			throw new RuntimeException("Email is already in use");
 		}
 		
 		User user = new User();
@@ -41,14 +42,11 @@ public class AuthService {
 	public String login(String email, String password) {
 		Optional<User> optionalUser = userRepository.findByEmail(email);
 		
-		if(optionalUser.isEmpty()) {
-			throw new RuntimeException("Utilisateur non trouvé");
-		}
-		
-		User user = optionalUser.get();
+		User user = optionalUser
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 		
 		if(!passwordEncoder.matches(password, user.getPassword())) {
-			throw new RuntimeException("Mot de passe incorect");
+			throw new RuntimeException("Incorrect password");
 		}
 		
 		String token = jwtUtil.generateToken(user);	
