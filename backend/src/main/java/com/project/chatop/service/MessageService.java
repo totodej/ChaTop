@@ -24,6 +24,10 @@ public class MessageService {
 		this.rentalRepository = rentalRepository;
 	}
 	
+	/**
+	 Crée un message lié à une location.
+	 Le message est associé à l'utilisateur courant grâce au JWT.
+	*/
 	public Message createMessage(MessageDto messageDto) {
 		LocalDateTime date = LocalDateTime.now();
 		

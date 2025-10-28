@@ -29,6 +29,9 @@ public class RentalService {
 		this.fileService = fileService;
 	}
 	
+	/*
+	 Récupère toutes les locations et les transforme en DTO pour l'affichage.
+	*/
 	public List<RentalDto> getAllRentals() {
 		List<Rental> rentals = rentalRepository.findAll();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -47,6 +50,9 @@ public class RentalService {
 				.toList();
 	}
 	
+	/*
+	 Récupère une location par son ID.
+	*/
 	public RentalDto getRentalById(Integer id) {
 		Rental rental = rentalRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Rental not found"));
@@ -67,6 +73,10 @@ public class RentalService {
 		return rentalDto;
 	}
 	
+	/*
+	 Crée une nouvelle location et associe l'utilisateur courant comme propriétaire.
+	 Gère le téléchargement d'image si fourni.
+	*/
 	public Rental createRental(MultipartFile picture, Rental rental) {
 		LocalDateTime currentDate = LocalDateTime.now();
 		
@@ -94,6 +104,10 @@ public class RentalService {
 		return rentalRepository.save(rental);
 	}
 	
+	/*
+	 Met à jour une location existante.
+	 Vérifie que l'utilisateur courant est bien le propriétaire.
+	*/
 	public RentalDto updateRental(Integer id, Rental rental) {
 		LocalDateTime currentDate = LocalDateTime.now();
 		

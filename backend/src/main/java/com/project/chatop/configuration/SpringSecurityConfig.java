@@ -32,6 +32,12 @@ public class SpringSecurityConfig {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 	
+    /*
+     Configuration des règles de sécurité HTTP.
+     - Désactive CSRF, formLogin et httpBasic
+     - Permet certaines routes sans authentification
+     - Définit le filtrage JWT pour toutes les autres requêtes
+    */
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
@@ -50,6 +56,9 @@ public class SpringSecurityConfig {
 	    return http.build();
 	}
 	
+	/*
+	 Bean pour encoder les mots de passe avec BCrypt.
+	*/
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

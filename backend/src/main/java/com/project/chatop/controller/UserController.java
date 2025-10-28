@@ -22,6 +22,9 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	/*
+	 Récupère les informations d'un utilisateur par son identifiant.
+	*/
 	@GetMapping("/{id}")
 	public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
 		UserDto user = userService.getUserById(id);

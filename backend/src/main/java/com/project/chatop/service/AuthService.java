@@ -24,6 +24,10 @@ public class AuthService {
 		this.jwtUtil = jwtUtil;
 	}
 	
+	/*
+	 Enregistre un nouvel utilisateur dans la base de données.
+	 Vérifie que l'email n'est pas déjà utilisé et encode le mot de passe.
+	*/
 	public User register (String name, String email, String password) {
 		if(userRepository.existsByEmail(email)) {
 			throw new RuntimeException("Email is already in use");
@@ -39,6 +43,10 @@ public class AuthService {
 		return userRepository.save(user);
 	}
 	
+	/*
+	 Authentifie un utilisateur avec email et mot de passe.
+	 Si les informations sont correctes, génère un JWT.
+	*/
 	public String login(String email, String password) {
 		Optional<User> optionalUser = userRepository.findByEmail(email);
 		

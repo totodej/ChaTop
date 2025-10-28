@@ -34,6 +34,9 @@ public class RentalController {
 		this.rentalService = rentalService;
 	}
 	
+	/*
+	 Récupère la liste de toutes les locations disponibles.
+	*/
 	@GetMapping
 	public ResponseEntity<Map<String, List<RentalDto>>> getAllRentals() {
 		List<RentalDto> rentals = rentalService.getAllRentals();
@@ -41,13 +44,20 @@ public class RentalController {
 		return ResponseEntity.ok(Map.of("rentals", rentals));
 	}
 	
+	/*
+	 Récupère une location spécifique par son identifiant.
+	*/
 	@GetMapping("/{id}")
 	public ResponseEntity<RentalDto> getRentalById(@PathVariable Integer id) {
 		RentalDto rental = rentalService.getRentalById(id);
 		
 	    return ResponseEntity.ok(rental);
 	}
-	
+
+	/*
+	 Crée une nouvelle location.  
+	 L'image est envoyée sous forme de fichier multipart.
+	*/
 	@PostMapping
 	public ResponseEntity<Map<String, String>> createRental(
 			@RequestParam("name") String name, 
@@ -70,6 +80,10 @@ public class RentalController {
 	    return ResponseEntity.ok(Map.of("message", "Rental created !"));
 	}
 	
+	/*
+	 Met à jour une location existante.
+	 Seul le propriétaire peut modifier sa propre location.
+	*/
 	@PutMapping("/{id}")
 	public ResponseEntity<Map<String, String>> updateRental(@PathVariable Integer id, 
 			@RequestParam("name") String name,

@@ -28,6 +28,9 @@ public class AuthController {
 		this.authService = authService;
 	}
 	
+	/*
+	 Enregistre un nouvel utilisateur et retourne immédiatement un token JWT.
+	*/
 	@PostMapping("/register")
 	public ResponseEntity<LoginResponseDto> register(@RequestBody RegisterRequestDto request) {
 		authService.register(request.getName(), request.getEmail(), request.getPassword());
@@ -35,6 +38,9 @@ public class AuthController {
 		return ResponseEntity.ok(new LoginResponseDto(token));
 	}
 	
+	/*
+	 Authentifie un utilisateur et renvoie un token JWT.
+	*/
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequestDto request) {
 		try {
@@ -45,6 +51,10 @@ public class AuthController {
 		}
 	}
 	
+	/*
+	 Récupère les informations de l'utilisateur actuellement connecté
+	 à partir du JWT présent dans le contexte de sécurité.
+	*/
 	@GetMapping("/me")
 	public ResponseEntity<Object> me() {
 	    var authentication = SecurityContextHolder.getContext().getAuthentication();

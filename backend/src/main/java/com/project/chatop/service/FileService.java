@@ -23,6 +23,9 @@ public class FileService {
 	@Value("${server.address}")
 	private String serverAddress;
 
+	/*
+     Sauvegarde un fichier sur le serveur et retourne son URL publique.
+    */
     public String save(MultipartFile file) throws IOException {
     	 String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 

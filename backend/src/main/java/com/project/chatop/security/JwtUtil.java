@@ -21,6 +21,10 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long EXPIRATION_TIME;
 	
+    /*
+     Génère un token JWT pour un utilisateur donné.
+     Le token contient des claims avec les informations de l'utilisateur.
+    */
 	public String generateToken(User user) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         return Jwts.builder()
@@ -35,6 +39,9 @@ public class JwtUtil {
                 .compact();
     }
 	
+    /*
+     Extrait les claims d'un token JWT valide.
+    */
 	public Claims extractClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
@@ -42,6 +49,9 @@ public class JwtUtil {
                 .getBody();
     }
 	
+	/*
+     Vérifie si un token JWT est valide (signature correcte et non expiré).
+    */
 	public boolean isTokenValid(String token) {
         try {
             Claims claims = extractClaims(token);

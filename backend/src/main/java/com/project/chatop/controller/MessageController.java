@@ -24,6 +24,10 @@ public class MessageController {
 		this.messageService = messageService;
 	}
 	
+	/*
+	 Crée un message associé à une location.
+	 L'utilisateur connecté est automatiquement identifié via son token JWT.
+	*/
 	@PostMapping
 	public ResponseEntity<Map<String, String>> createMessage(@RequestBody MessageDto messageDto) {
 		System.out.println("Message reçu : " + messageDto.getUserId() + ", " + messageDto.getRentalId());
