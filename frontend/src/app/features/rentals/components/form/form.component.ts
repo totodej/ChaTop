@@ -57,14 +57,8 @@ export class FormComponent implements OnInit {
         .create(formData)
         .subscribe((rentalResponse: RentalResponse) => this.exitPage(rentalResponse));
     } else {
-      const rentalUpdate = {
-        name: this.rentalForm!.get('name')?.value,
-        surface: this.rentalForm!.get('surface')?.value,
-        price: this.rentalForm!.get('price')?.value,
-        description: this.rentalForm!.get('description')?.value
-      };
       this.rentalsService
-        .update(this.id!, rentalUpdate)
+        .update(this.id!, formData)
         .subscribe((rentalResponse: RentalResponse) => this.exitPage(rentalResponse));
     }
   }

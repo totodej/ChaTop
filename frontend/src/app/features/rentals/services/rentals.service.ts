@@ -27,8 +27,7 @@ export class RentalsService {
     return this.httpClient.post<RentalResponse>(this.pathService, form);
   }
 
-  public update(id: string, rental: any): Observable<RentalResponse> {
-    const headers = { 'Content-Type': 'application/json' };
-    return this.httpClient.put<RentalResponse>(`${this.pathService}/${id}`, rental, { headers });
+  public update(id: string, form: FormData): Observable<RentalResponse> {
+    return this.httpClient.put<RentalResponse>(`${this.pathService}/${id}`, form);
   }
 }
