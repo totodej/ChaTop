@@ -77,7 +77,19 @@ public class RentalController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Map<String, String>> updateRental(@PathVariable Integer id, @RequestBody Rental rental) {
+	public ResponseEntity<Map<String, String>> updateRental(@PathVariable Integer id, 
+			@RequestParam("name") String name,
+	        @RequestParam("surface") Integer surface,
+	        @RequestParam("price") float price,
+	        @RequestParam("description") String description,
+	        @RequestParam(value = "picture", required = false) MultipartFile picture) {
+		
+		Rental rental = new Rental();
+	    rental.setName(name);
+	    rental.setSurface(surface);
+	    rental.setPrice(price);
+	    rental.setDescription(description);
+	    
 		rentalService.updateRental(id, rental);
 		
 		return ResponseEntity.ok(Map.of("message", "Rental updated !"));
